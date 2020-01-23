@@ -11,14 +11,14 @@ import { getType } from './getType';
 
 export function getModel(openApi: OpenApi, definition: OpenApiSchema, isProperty: boolean = false, name: string = ''): Model {
     const model: Model = {
-        name: name,
+        name,
         export: 'interface',
         type: PrimaryType.OBJECT,
         base: PrimaryType.OBJECT,
         template: null,
         link: null,
         description: getComment(definition.description),
-        isProperty: isProperty,
+        isProperty,
         isReadOnly: definition.readOnly === true,
         isNullable: definition.nullable === true,
         isRequired: false,

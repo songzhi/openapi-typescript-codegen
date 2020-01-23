@@ -20,6 +20,7 @@
         "@typescript-eslint/ban-ts-ignore": 0,
         "@typescript-eslint/explicit-function-return-type": 0,
         "sort-imports-es6-autofix/sort-imports-es6": "error",
-        "prettier/prettier": ["error"]
+        "prettier/prettier": ["error"],
+        "semi": "off"
     }
 }

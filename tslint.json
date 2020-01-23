@@ -1,7 +1,7 @@
 {
     "extends": [
-        "tslint:recommended",
-        "tslint-config-airbnb"
+        "tslint:recommended"
+        // "tslint-config-airbnb"
     ],
     "rules": {
         "align": false,
@@ -22,6 +22,7 @@
         "arrow-parens": [true, "ban-single-arg-parens"],
         "ter-arrow-parens": [true, "as-needed"],
         "no-submodule-imports": [true],
+        "quotemark": false,
         "function-name": [true, {
             "function-regex": "^[a-zA-Z$][\\w\\d]*$",
             "method-regex": "^[a-z$][\\w\\d]*$",
