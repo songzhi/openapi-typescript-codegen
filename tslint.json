@@ -6,7 +6,7 @@
     "rules": {
         "align": false,
         "import-name": false,
-        "ordered-imports": true,
+        "ordered-imports": false,
         "object-literal-sort-keys": false,
         "no-boolean-literal-compare": false,
         "no-increment-decrement": false,

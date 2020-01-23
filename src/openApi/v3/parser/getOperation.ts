@@ -1,6 +1,7 @@
 import { OpenApi } from '../interfaces/OpenApi';
 import { OpenApiOperation } from '../interfaces/OpenApiOperation';
 import { Operation } from '../../../client/interfaces/Operation';
+import { OperationParameter } from '../../../client/interfaces/OperationParameter';
 import { getComment } from './getComment';
 import { getOperationErrors } from './getOperationErrors';
 import { getOperationName } from './getOperationName';
@@ -10,6 +11,10 @@ import { getOperationRequestBody } from './getOperationRequestBody';
 import { getOperationResponses } from './getOperationResponses';
 import { getOperationResults } from './getOperationResults';
 import { getServiceClassName } from './getServiceClassName';
+
+function sortByRequired(a: OperationParameter, b: OperationParameter): number {
+    return a.isRequired && !b.isRequired ? -1 : !a.isRequired && b.isRequired ? 1 : 0;
+}
 
 export function getOperation(openApi: OpenApi, url: string, method: string, op: OpenApiOperation): Operation {
     const serviceName = (op.tags && op.tags[0]) || 'Service';
@@ -25,7 +30,7 @@ export function getOperation(openApi: OpenApi, url: string, method: string, op: 
         summary: getComment(op.summary),
         description: getComment(op.description),
         deprecated: op.deprecated === true,
-        method: method,
+        method,
         path: operationPath,
         parameters: [],
         parametersPath: [],
@@ -56,6 +61,7 @@ export function getOperation(openApi: OpenApi, url: string, method: string, op: 
         const requestBody = getOperationRequestBody(openApi, op.requestBody);
         operation.imports.push(...requestBody.imports);
         operation.parameters.push(requestBody);
+        operation.parameters = operation.parameters.sort(sortByRequired);
         operation.parametersBody = requestBody;
     }
 

@@ -60,8 +60,8 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
             operationParameter.template = model.template;
             operationParameter.link = model.link;
             operationParameter.isReadOnly = model.isReadOnly;
-            operationParameter.isRequired = model.isRequired;
-            operationParameter.isNullable = model.isNullable;
+            operationParameter.isRequired = model.default || model.isRequired || operationParameter.isRequired;
+            operationParameter.isNullable = model.isNullable || operationParameter.isNullable;
             operationParameter.format = model.format;
             operationParameter.maximum = model.maximum;
             operationParameter.exclusiveMaximum = model.exclusiveMaximum;
@@ -77,7 +77,6 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
             operationParameter.maxProperties = model.maxProperties;
             operationParameter.minProperties = model.minProperties;
             operationParameter.default = model.default;
-            operationParameter.isRequired = model.default || model.isRequired;
             operationParameter.imports.push(...model.imports);
             operationParameter.extends.push(...model.extends);
             operationParameter.enum.push(...model.enum);
