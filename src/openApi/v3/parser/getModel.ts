@@ -41,7 +41,7 @@ export function getModel(openApi: OpenApi, definition: OpenApiSchema, isProperty
     }
 
     if (definition.enum) {
-        const enumerators = getEnum(definition.enum);
+        const enumerators = getEnum(definition.enum, definition.type, definition.enumNames);
         if (enumerators.length) {
             model.export = 'enum';
             model.type = PrimaryType.STRING;
