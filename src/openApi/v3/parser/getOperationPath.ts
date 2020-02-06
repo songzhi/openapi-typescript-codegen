@@ -1,3 +1,4 @@
+import camelCase from 'camelcase';
 /**
  * Get the final service path, this replaces the "{api-version}" placeholder
  * with a new template string placeholder so we can dynamically inject the
@@ -5,5 +6,5 @@
  * @param path
  */
 export function getOperationPath(path: string): string {
-    return path.replace(/{api-version}/g, '{OpenAPI.VERSION}').replace(/\{(.*?)\}/g, '${$1}');
+    return path.replace(/{api-version}/g, '{OpenAPI.VERSION}').replace(/\{(.*?)\}/g, w => `\$\{${camelCase(w)}\}`);
 }

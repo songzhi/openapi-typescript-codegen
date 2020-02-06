@@ -1,12 +1,12 @@
 {
-    "name": "openapi-typescript-codegen",
-    "version": "0.1.12",
+    "name": "@lsongzhi/openapi-typescript-codegen",
+    "version": "0.1.14",
     "description": "NodeJS library that generates Typescript or Javascript clients based on the OpenAPI specification.",
     "author": "Ferdi Koomen",
     "homepage": "https://github.com/ferdikoomen/openapi-typescript-codegen",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ferdikoomen/openapi-typescript-codegen.git"
+        "url": "git+https://github.com/songzhi/openapi-typescript-codegen.git"
     },
     "bugs": {
         "url": "https://github.com/ferdikoomen/openapi-typescript-codegen/issues"
@@ -25,12 +25,6 @@
         "fetch",
         "xhr",
         "node"
-    ],
-    "maintainers": [
-        {
-            "name": "Ferdi Koomen",
-            "email": "info@madebyferdi.com"
-        }
     ],
     "main": "dist/index.js",
     "module": "dist/index.js",
