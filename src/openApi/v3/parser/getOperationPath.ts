@@ -6,5 +6,5 @@ import camelCase from 'camelcase';
  * @param path
  */
 export function getOperationPath(path: string): string {
-    return path.replace(/{api-version}/g, '{OpenAPI.VERSION}').replace(/\{(.*?)\}/g, w => `\$\{${camelCase(w)}\}`);
+    return path.replace(/{api-version}/g, '{OpenAPI.VERSION}').replace(/\{(.*?)\}/g, (_, w) => `\$\{${camelCase(w)}\}`);
 }
