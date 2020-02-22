@@ -1,10 +1,10 @@
 import { Enum } from '../../../client/interfaces/Enum';
 import { PrimaryType } from './constants';
 
-export function getEnum(values?: (string | number)[], type?: string, names?: string[]): Enum[] {
+export function getEnum(values?: (string | number)[]): Enum[] {
     if (Array.isArray(values)) {
-        if (!names) {
-            values = values.filter((value, index, arr) => {
+        return values
+            .filter((value, index, arr) => {
                 return arr.indexOf(value) === index;
             })
             .map(value => {
@@ -22,13 +22,7 @@ export function getEnum(values?: (string | number)[], type?: string, names?: str
                     type: PrimaryType.STRING,
                     description: null,
                 };
-            }
-            return {
-                name: names?.[index] ?? value.replace(/([a-z])([A-Z]+)/g, '$1_$2').toUpperCase(),
-                value: `'${value}'`,
-                type: PrimaryType.STRING,
-            };
-        });
+            });
     }
     return [];
 }
