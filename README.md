@@ -9,7 +9,8 @@
 > NodeJS library that generates Typescript clients based on the OpenAPI specification.
 
 ## This is a fork of openapi-typescript-codegen with some bugfixes and customizations:
-* support `enumNames: string[]` in schema to generate enums with names in the field.
+* support `x-enum-varnames: string[]` and `x-enum-descriptions` in schema to generate enums with names and descriptions in the field.
+* changed service parameters style
 
 #### Why?
 - Frontend ❤️ OpenAPI, but we do not want to use JAVA codegen in our builds.

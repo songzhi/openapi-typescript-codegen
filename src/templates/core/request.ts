@@ -9,6 +9,7 @@ import { OpenAPI } from './OpenAPI';
 import { RequestOptions } from './RequestOptions';
 import { requestUsingFetch } from './requestUsingFetch';
 import { requestUsingXHR } from './requestUsingXHR';
+import { requestUsingFlyIOWX } from './requestUsingFlyIOWX'
 import { Result } from './Result';
 
 /**
@@ -67,6 +68,8 @@ export async function request(options: Readonly<RequestOptions>): Promise<Result
         switch (OpenAPI.CLIENT) {
             case 'xhr':
                 return await requestUsingXHR(url, request);
+            case 'wx':
+                return await requestUsingFlyIOWX(url, request);
             default:
                 return await requestUsingFetch(url, request);
         }

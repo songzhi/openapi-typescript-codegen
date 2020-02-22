@@ -1,7 +1,6 @@
 import { OpenApi } from '../interfaces/OpenApi';
 import { OpenApiOperation } from '../interfaces/OpenApiOperation';
 import { Operation } from '../../../client/interfaces/Operation';
-import { OperationParameter } from '../../../client/interfaces/OperationParameter';
 import { getComment } from './getComment';
 import { getOperationErrors } from './getOperationErrors';
 import { getOperationName } from './getOperationName';
@@ -12,10 +11,6 @@ import { getOperationResponses } from './getOperationResponses';
 import { getOperationResults } from './getOperationResults';
 import { getServiceClassName } from './getServiceClassName';
 import { sortByRequired } from './sortByRequired';
-
-function sortByRequired(a: OperationParameter, b: OperationParameter): number {
-    return a.isRequired && !b.isRequired ? -1 : !a.isRequired && b.isRequired ? 1 : 0;
-}
 
 export function getOperation(openApi: OpenApi, url: string, method: string, op: OpenApiOperation): Operation {
     const serviceName = (op.tags && op.tags[0]) || 'Service';
