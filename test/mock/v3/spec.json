@@ -113,6 +113,170 @@
                 ],
                 "requestBody": {
                     "description": "This is the parameter that goes into the body",
+                    "required": true,
+                    "nullable": true,
+                    "content": {
+                        "application/json": {
+                            "description": "Message for default response",
+                            "schema": {
+                                "$ref": "#/components/schemas/ModelWithString"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v{api-version}/parameters/{parameter.path.1}/{parameter-path-2}/{PARAMETER-PATH-3}": {
+            "get": {
+                "tags": [
+                    "Parameters"
+                ],
+                "operationId": "CallWithWeirdParameterNames",
+                "parameters": [
+                    {
+                        "description": "This is the parameter that goes into the path",
+                        "name": "parameter.path.1",
+                        "in": "path",
+                        "required": false,
+                        "nullable": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "This is the parameter that goes into the path",
+                        "name": "parameter-path-2",
+                        "in": "path",
+                        "required": false,
+                        "nullable": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "This is the parameter that goes into the path",
+                        "name": "PARAMETER-PATH-3",
+                        "in": "path",
+                        "required": false,
+                        "nullable": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "This is the parameter that goes into the request header",
+                        "name": "parameter.header",
+                        "in": "header",
+                        "required": true,
+                        "nullable": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "This is the parameter that goes into the request query params",
+                        "name": "parameter-query",
+                        "in": "query",
+                        "required": true,
+                        "nullable": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "This is the parameter that goes into the request form data",
+                        "name": "parameter_form",
+                        "in": "formData",
+                        "required": true,
+                        "nullable": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "This is the parameter that goes into the cookie",
+                        "name": "PARAMETER-COOKIE",
+                        "in": "cookie",
+                        "required": true,
+                        "nullable": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "path",
+                        "required": true,
+                        "nullable": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "This is the parameter that goes into the body",
+                    "required": true,
+                    "nullable": true,
+                    "content": {
+                        "application/json": {
+                            "description": "Message for default response",
+                            "schema": {
+                                "$ref": "#/components/schemas/ModelWithString"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v{api-version}/parameters/": {
+            "get": {
+                "tags": [
+                    "Parameters"
+                ],
+                "operationId": "getCallWithOptionalParam",
+                "parameters": [
+                    {
+                        "description": "This is an optional parameter",
+                        "name": "parameter",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "This is a required parameter",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "description": "Message for default response",
+                            "schema": {
+                                "$ref": "#/components/schemas/ModelWithString"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Parameters"
+                ],
+                "operationId": "postCallWithOptionalParam",
+                "parameters": [
+                    {
+                        "description": "This is a required parameter",
+                        "name": "parameter",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "This is an optional parameter",
+                    "required": false,
                     "content": {
                         "application/json": {
                             "description": "Message for default response",
@@ -589,10 +753,142 @@
                     }
                 }
             }
+        },
+        "/api/v{api-version}/complex/{id}": {
+            "put": {
+                "tags": [
+                    "Complex"
+                ],
+                "operationId": "ComplexParams",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "api-version",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json-patch+json": {
+                            "schema": {
+                                "required": [
+                                    "key",
+                                    "name",
+                                    "parameters",
+                                    "type"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "key": {
+                                        "maxLength": 64,
+                                        "pattern": "^[a-zA-Z0-9_]*$",
+                                        "type": "string",
+                                        "nullable": true,
+                                        "readOnly": true
+                                    },
+                                    "name": {
+                                        "maxLength": 255,
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "enabled": {
+                                        "type": "boolean",
+                                        "default": true
+                                    },
+                                    "type": {
+                                        "enum": [
+                                            "Monkey",
+                                            "Horse",
+                                            "Bird"
+                                        ],
+                                        "type": "string",
+                                        "readOnly": true
+                                    },
+                                    "listOfModels": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ModelWithString"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "listOfStrings": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "nullable": true
+                                    },
+                                    "parameters": {
+                                        "type": "object",
+                                        "oneOf": [
+                                            {
+                                                "$ref": "#/components/schemas/ModelWithString"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/ModelWithEnum"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/ModelWithArray"
+                                            },
+                                            {
+                                                "$ref": "#/components/schemas/ModelWithDictionary"
+                                            }
+                                        ]
+                                    },
+                                    "user": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "format": "int32",
+                                                "readOnly": true
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "nullable": true,
+                                                "readOnly": true
+                                            }
+                                        },
+                                        "readOnly": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ModelWithString"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "MultilineComment": {
+                "description": "Testing multiline comments.\nThis must go to the next line.\n\nThis will contain a break.",
+                "type": "integer"
+            },
             "SimpleInteger": {
                 "description": "This is a simple number",
                 "type": "integer"
@@ -632,6 +928,24 @@
             "EnumFromDescription": {
                 "description": "Success=1,Warning=2,Error=3",
                 "type": "int"
+            },
+            "EnumWithExtensions": {
+                "description": "This is a simple enum with numbers",
+                "enum": [
+                    200,
+                    400,
+                    500
+                ],
+                "x-enum-varnames": [
+                    "CUSTOM_SUCCESS",
+                    "CUSTOM_WARNING",
+                    "CUSTOM_ERROR"
+                ],
+                "x-enum-descriptions": [
+                    "Used when the status of something is successful",
+                    "Used when the status of something has a warning",
+                    "Used when the status of something has an error"
+                ]
             },
             "ArrayWithNumbers": {
                 "description": "This is a simple array with numbers",
@@ -898,6 +1212,52 @@
                 "properties": {
                     "prop": {
                         "$ref": "#/components/schemas/ModelWithCircularReference"
+                    }
+                }
+            },
+            "ModelWithOneOf": {
+                "description": "This is a model with one property with a 'one of' relationship",
+                "type": "object",
+                "properties": {
+                    "propA": {
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/ModelWithString"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ModelWithEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ModelWithArray"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ModelWithDictionary"
+                            }
+                        ]
+                    }
+                }
+            },
+            "ModelWithAnyOf": {
+                "description": "This is a model with one property with a 'any of' relationship",
+                "type": "object",
+                "properties": {
+                    "propA": {
+                        "type": "object",
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ModelWithString"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ModelWithEnum"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ModelWithArray"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ModelWithDictionary"
+                            }
+                        ]
                     }
                 }
             },

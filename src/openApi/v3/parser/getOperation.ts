@@ -11,6 +11,7 @@ import { getOperationRequestBody } from './getOperationRequestBody';
 import { getOperationResponses } from './getOperationResponses';
 import { getOperationResults } from './getOperationResults';
 import { getServiceClassName } from './getServiceClassName';
+import { sortByRequired } from './sortByRequired';
 
 function sortByRequired(a: OperationParameter, b: OperationParameter): number {
     return a.isRequired && !b.isRequired ? -1 : !a.isRequired && b.isRequired ? 1 : 0;

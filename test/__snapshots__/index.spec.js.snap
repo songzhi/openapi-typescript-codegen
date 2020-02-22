@@ -435,6 +435,7 @@ export { DictionaryWithProperties } from './models/DictionaryWithProperties';
 export { DictionaryWithReference } from './models/DictionaryWithReference';
 export { DictionaryWithString } from './models/DictionaryWithString';
 export { EnumFromDescription } from './models/EnumFromDescription';
+export { EnumWithExtensions } from './models/EnumWithExtensions';
 export { EnumWithNumbers } from './models/EnumWithNumbers';
 export { EnumWithStrings } from './models/EnumWithStrings';
 export { ModelLink } from './models/ModelLink';
@@ -456,6 +457,7 @@ export { ModelWithOrderedProperties } from './models/ModelWithOrderedProperties'
 export { ModelWithProperties } from './models/ModelWithProperties';
 export { ModelWithReference } from './models/ModelWithReference';
 export { ModelWithString } from './models/ModelWithString';
+export { MultilineComment } from './models/MultilineComment';
 export { SimpleBoolean } from './models/SimpleBoolean';
 export { SimpleFile } from './models/SimpleFile';
 export { SimpleInteger } from './models/SimpleInteger';
@@ -474,6 +476,7 @@ export { $DictionaryWithProperties } from './schemas/$DictionaryWithProperties';
 export { $DictionaryWithReference } from './schemas/$DictionaryWithReference';
 export { $DictionaryWithString } from './schemas/$DictionaryWithString';
 export { $EnumFromDescription } from './schemas/$EnumFromDescription';
+export { $EnumWithExtensions } from './schemas/$EnumWithExtensions';
 export { $EnumWithNumbers } from './schemas/$EnumWithNumbers';
 export { $EnumWithStrings } from './schemas/$EnumWithStrings';
 export { $ModelLink } from './schemas/$ModelLink';
@@ -495,6 +498,7 @@ export { $ModelWithOrderedProperties } from './schemas/$ModelWithOrderedProperti
 export { $ModelWithProperties } from './schemas/$ModelWithProperties';
 export { $ModelWithReference } from './schemas/$ModelWithReference';
 export { $ModelWithString } from './schemas/$ModelWithString';
+export { $MultilineComment } from './schemas/$MultilineComment';
 export { $SimpleBoolean } from './schemas/$SimpleBoolean';
 export { $SimpleFile } from './schemas/$SimpleFile';
 export { $SimpleInteger } from './schemas/$SimpleInteger';
@@ -694,6 +698,32 @@ export enum EnumFromDescription {
     SUCCESS = 1,
     WARNING = 2,
     ERROR = 3,
+}"
+`;
+
+exports[`generation v2 file(./test/result/v2/models/EnumWithExtensions.ts): ./test/result/v2/models/EnumWithExtensions.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+
+/**
+ * This is a simple enum with numbers
+ */
+export enum EnumWithExtensions {
+    /**
+     * Used when the status of something is successful
+     */
+    CUSTOM_SUCCESS = 200,
+    /**
+     * Used when the status of something has a warning
+     */
+    CUSTOM_WARNING = 400,
+    /**
+     * Used when the status of something has an error
+     */
+    CUSTOM_ERROR = 500,
 }"
 `;
 
@@ -1110,6 +1140,22 @@ export interface ModelWithString {
 "
 `;
 
+exports[`generation v2 file(./test/result/v2/models/MultilineComment.ts): ./test/result/v2/models/MultilineComment.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+
+/**
+ * Testing multiline comments.
+ * This must go to the next line.
+ *
+ * This will contain a break.
+ */
+export type MultilineComment = number;"
+`;
+
 exports[`generation v2 file(./test/result/v2/models/SimpleBoolean.ts): ./test/result/v2/models/SimpleBoolean.ts 1`] = `
 "/* istanbul ignore file */
 /* tslint:disable */
@@ -1304,6 +1350,17 @@ exports[`generation v2 file(./test/result/v2/schemas/$EnumFromDescription.ts): .
 /* prettier-ignore */
 
 export const $EnumFromDescription = {
+    type: 'Enum',
+};"
+`;
+
+exports[`generation v2 file(./test/result/v2/schemas/$EnumWithExtensions.ts): ./test/result/v2/schemas/$EnumWithExtensions.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+export const $EnumWithExtensions = {
     type: 'Enum',
 };"
 `;
@@ -1688,6 +1745,17 @@ export const $ModelWithString = {
 };"
 `;
 
+exports[`generation v2 file(./test/result/v2/schemas/$MultilineComment.ts): ./test/result/v2/schemas/$MultilineComment.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+export const $MultilineComment = {
+    type: 'number',
+};"
+`;
+
 exports[`generation v2 file(./test/result/v2/schemas/$SimpleBoolean.ts): ./test/result/v2/schemas/$SimpleBoolean.ts 1`] = `
 "/* istanbul ignore file */
 /* tslint:disable */
@@ -1885,6 +1953,46 @@ export class ParametersService {
             },
             formData: {
                 'parameterForm': parameterForm,
+            },
+            body: parameterBody,
+        });
+
+        catchGenericError(result);
+
+        return result.body;
+    }
+
+    /**
+     * @param parameterHeader This is the parameter that goes into the request header
+     * @param parameterQuery This is the parameter that goes into the request query params
+     * @param parameterForm This is the parameter that goes into the request form data
+     * @param parameterBody This is the parameter that is send as request body
+     * @param parameterPath1 This is the parameter that goes into the path
+     * @param parameterPath2 This is the parameter that goes into the path
+     * @param parameterPath3 This is the parameter that goes into the path
+     * @throws ApiError
+     */
+    public static async callWithWeirdParameterNames(
+        parameterHeader: string,
+        parameterQuery: string,
+        parameterForm: string,
+        parameterBody: string,
+        parameterPath1?: string,
+        parameterPath2?: string,
+        parameterPath3?: string,
+    ): Promise<void> {
+
+        const result = await __request({
+            method: 'get',
+            path: \`/api/v\${OpenAPI.VERSION}/parameters/\${parameterPath1}/\${parameterPath2}/\${parameterPath3}\`,
+            headers: {
+                'parameter.header': parameterHeader,
+            },
+            query: {
+                'parameter-query': parameterQuery,
+            },
+            formData: {
+                'parameter_form': parameterForm,
             },
             body: parameterBody,
         });
@@ -2597,11 +2705,13 @@ export { DictionaryWithProperties } from './models/DictionaryWithProperties';
 export { DictionaryWithReference } from './models/DictionaryWithReference';
 export { DictionaryWithString } from './models/DictionaryWithString';
 export { EnumFromDescription } from './models/EnumFromDescription';
+export { EnumWithExtensions } from './models/EnumWithExtensions';
 export { EnumWithNumbers } from './models/EnumWithNumbers';
 export { EnumWithStrings } from './models/EnumWithStrings';
 export { ModelLink } from './models/ModelLink';
 export { ModelThatExtends } from './models/ModelThatExtends';
 export { ModelThatExtendsExtends } from './models/ModelThatExtendsExtends';
+export { ModelWithAnyOf } from './models/ModelWithAnyOf';
 export { ModelWithArray } from './models/ModelWithArray';
 export { ModelWithBoolean } from './models/ModelWithBoolean';
 export { ModelWithCircularReference } from './models/ModelWithCircularReference';
@@ -2614,10 +2724,12 @@ export { ModelWithInteger } from './models/ModelWithInteger';
 export { ModelWithLink } from './models/ModelWithLink';
 export { ModelWithNestedEnums } from './models/ModelWithNestedEnums';
 export { ModelWithNestedProperties } from './models/ModelWithNestedProperties';
+export { ModelWithOneOf } from './models/ModelWithOneOf';
 export { ModelWithOrderedProperties } from './models/ModelWithOrderedProperties';
 export { ModelWithProperties } from './models/ModelWithProperties';
 export { ModelWithReference } from './models/ModelWithReference';
 export { ModelWithString } from './models/ModelWithString';
+export { MultilineComment } from './models/MultilineComment';
 export { SimpleBoolean } from './models/SimpleBoolean';
 export { SimpleFile } from './models/SimpleFile';
 export { SimpleInteger } from './models/SimpleInteger';
@@ -2636,11 +2748,13 @@ export { $DictionaryWithProperties } from './schemas/$DictionaryWithProperties';
 export { $DictionaryWithReference } from './schemas/$DictionaryWithReference';
 export { $DictionaryWithString } from './schemas/$DictionaryWithString';
 export { $EnumFromDescription } from './schemas/$EnumFromDescription';
+export { $EnumWithExtensions } from './schemas/$EnumWithExtensions';
 export { $EnumWithNumbers } from './schemas/$EnumWithNumbers';
 export { $EnumWithStrings } from './schemas/$EnumWithStrings';
 export { $ModelLink } from './schemas/$ModelLink';
 export { $ModelThatExtends } from './schemas/$ModelThatExtends';
 export { $ModelThatExtendsExtends } from './schemas/$ModelThatExtendsExtends';
+export { $ModelWithAnyOf } from './schemas/$ModelWithAnyOf';
 export { $ModelWithArray } from './schemas/$ModelWithArray';
 export { $ModelWithBoolean } from './schemas/$ModelWithBoolean';
 export { $ModelWithCircularReference } from './schemas/$ModelWithCircularReference';
@@ -2653,10 +2767,12 @@ export { $ModelWithInteger } from './schemas/$ModelWithInteger';
 export { $ModelWithLink } from './schemas/$ModelWithLink';
 export { $ModelWithNestedEnums } from './schemas/$ModelWithNestedEnums';
 export { $ModelWithNestedProperties } from './schemas/$ModelWithNestedProperties';
+export { $ModelWithOneOf } from './schemas/$ModelWithOneOf';
 export { $ModelWithOrderedProperties } from './schemas/$ModelWithOrderedProperties';
 export { $ModelWithProperties } from './schemas/$ModelWithProperties';
 export { $ModelWithReference } from './schemas/$ModelWithReference';
 export { $ModelWithString } from './schemas/$ModelWithString';
+export { $MultilineComment } from './schemas/$MultilineComment';
 export { $SimpleBoolean } from './schemas/$SimpleBoolean';
 export { $SimpleFile } from './schemas/$SimpleFile';
 export { $SimpleInteger } from './schemas/$SimpleInteger';
@@ -2860,6 +2976,32 @@ export enum EnumFromDescription {
 }"
 `;
 
+exports[`generation v3 file(./test/result/v3/models/EnumWithExtensions.ts): ./test/result/v3/models/EnumWithExtensions.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+
+/**
+ * This is a simple enum with numbers
+ */
+export enum EnumWithExtensions {
+    /**
+     * Used when the status of something is successful
+     */
+    CUSTOM_SUCCESS = 200,
+    /**
+     * Used when the status of something has a warning
+     */
+    CUSTOM_WARNING = 400,
+    /**
+     * Used when the status of something has an error
+     */
+    CUSTOM_ERROR = 500,
+}"
+`;
+
 exports[`generation v3 file(./test/result/v3/models/EnumWithNumbers.ts): ./test/result/v3/models/EnumWithNumbers.ts 1`] = `
 "/* istanbul ignore file */
 /* tslint:disable */
@@ -2943,6 +3085,26 @@ import { ModelWithString } from './ModelWithString';
 export interface ModelThatExtendsExtends extends ModelWithString, ModelThatExtends {
     propExtendsC?: string;
     propExtendsD?: ModelWithString;
+}
+"
+`;
+
+exports[`generation v3 file(./test/result/v3/models/ModelWithAnyOf.ts): ./test/result/v3/models/ModelWithAnyOf.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+import { ModelWithArray } from './ModelWithArray';
+import { ModelWithDictionary } from './ModelWithDictionary';
+import { ModelWithEnum } from './ModelWithEnum';
+import { ModelWithString } from './ModelWithString';
+
+/**
+ * This is a model with one property with a 'any of' relationship
+ */
+export interface ModelWithAnyOf {
+    propA?: ModelWithString | ModelWithEnum | ModelWithArray | ModelWithDictionary;
 }
 "
 `;
@@ -3197,6 +3359,26 @@ export interface ModelWithNestedProperties {
 "
 `;
 
+exports[`generation v3 file(./test/result/v3/models/ModelWithOneOf.ts): ./test/result/v3/models/ModelWithOneOf.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+import { ModelWithArray } from './ModelWithArray';
+import { ModelWithDictionary } from './ModelWithDictionary';
+import { ModelWithEnum } from './ModelWithEnum';
+import { ModelWithString } from './ModelWithString';
+
+/**
+ * This is a model with one property with a 'one of' relationship
+ */
+export interface ModelWithOneOf {
+    propA?: ModelWithString | ModelWithEnum | ModelWithArray | ModelWithDictionary;
+}
+"
+`;
+
 exports[`generation v3 file(./test/result/v3/models/ModelWithOrderedProperties.ts): ./test/result/v3/models/ModelWithOrderedProperties.ts 1`] = `
 "/* istanbul ignore file */
 /* tslint:disable */
@@ -3272,6 +3454,22 @@ export interface ModelWithString {
     prop?: string;
 }
 "
+`;
+
+exports[`generation v3 file(./test/result/v3/models/MultilineComment.ts): ./test/result/v3/models/MultilineComment.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+
+/**
+ * Testing multiline comments.
+ * This must go to the next line.
+ *
+ * This will contain a break.
+ */
+export type MultilineComment = number;"
 `;
 
 exports[`generation v3 file(./test/result/v3/models/SimpleBoolean.ts): ./test/result/v3/models/SimpleBoolean.ts 1`] = `
@@ -3472,6 +3670,17 @@ export const $EnumFromDescription = {
 };"
 `;
 
+exports[`generation v3 file(./test/result/v3/schemas/$EnumWithExtensions.ts): ./test/result/v3/schemas/$EnumWithExtensions.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+export const $EnumWithExtensions = {
+    type: 'Enum',
+};"
+`;
+
 exports[`generation v3 file(./test/result/v3/schemas/$EnumWithNumbers.ts): ./test/result/v3/schemas/$EnumWithNumbers.ts 1`] = `
 "/* istanbul ignore file */
 /* tslint:disable */
@@ -3548,6 +3757,21 @@ export const $ModelThatExtendsExtends = {
         },
         propExtendsD: {
             type: 'ModelWithString',
+        },
+    },
+};"
+`;
+
+exports[`generation v3 file(./test/result/v3/schemas/$ModelWithAnyOf.ts): ./test/result/v3/schemas/$ModelWithAnyOf.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+export const $ModelWithAnyOf = {
+    properties: {
+        propA: {
+            type: 'ModelWithString | ModelWithEnum | ModelWithArray | ModelWithDictionary',
         },
     },
 };"
@@ -3771,6 +3995,21 @@ export const $ModelWithNestedProperties = {
 };"
 `;
 
+exports[`generation v3 file(./test/result/v3/schemas/$ModelWithOneOf.ts): ./test/result/v3/schemas/$ModelWithOneOf.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+export const $ModelWithOneOf = {
+    properties: {
+        propA: {
+            type: 'ModelWithString | ModelWithEnum | ModelWithArray | ModelWithDictionary',
+        },
+    },
+};"
+`;
+
 exports[`generation v3 file(./test/result/v3/schemas/$ModelWithOrderedProperties.ts): ./test/result/v3/schemas/$ModelWithOrderedProperties.ts 1`] = `
 "/* istanbul ignore file */
 /* tslint:disable */
@@ -3860,6 +4099,17 @@ export const $ModelWithString = {
 };"
 `;
 
+exports[`generation v3 file(./test/result/v3/schemas/$MultilineComment.ts): ./test/result/v3/schemas/$MultilineComment.ts 1`] = `
+"/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore */
+
+export const $MultilineComment = {
+    type: 'number',
+};"
+`;
+
 exports[`generation v3 file(./test/result/v3/schemas/$SimpleBoolean.ts): ./test/result/v3/schemas/$SimpleBoolean.ts 1`] = `
 "/* istanbul ignore file */
 /* tslint:disable */
@@ -3921,6 +4171,9 @@ exports[`generation v3 file(./test/result/v3/services/ComplexService.ts): ./test
 /* eslint-disable */
 /* prettier-ignore */
 
+import { ModelWithArray } from '../models/ModelWithArray';
+import { ModelWithDictionary } from '../models/ModelWithDictionary';
+import { ModelWithEnum } from '../models/ModelWithEnum';
 import { ModelWithString } from '../models/ModelWithString';
 import { ApiError, catchGenericError } from '../core/ApiError';
 import { request as __request } from '../core/request';
@@ -3929,28 +4182,28 @@ import { OpenAPI } from '../core/OpenAPI';
 export class ComplexService {
 
     /**
-     * @param parameterReference Parameter containing reference
      * @param parameterObject Parameter containing object
+     * @param parameterReference Parameter containing reference
      * @result ModelWithString Successful response
      * @throws ApiError
      */
     public static async complexTypes(
-        parameterReference: ModelWithString,
-        parameterObject?: {
+        parameterObject: {
             first?: {
                 second?: {
                     third?: string,
                 },
             },
         },
+        parameterReference: ModelWithString,
     ): Promise<Array<ModelWithString>> {
 
         const result = await __request({
             method: 'get',
             path: \`/api/v\${OpenAPI.VERSION}/complex\`,
             query: {
-                'parameterReference': parameterReference,
                 'parameterObject': parameterObject,
+                'parameterReference': parameterReference,
             },
         });
 
@@ -3960,6 +4213,40 @@ export class ComplexService {
                 case 500: throw new ApiError(result, \`500 server error\`);
             }
         }
+
+        catchGenericError(result);
+
+        return result.body;
+    }
+
+    /**
+     * @param id
+     * @param requestBody
+     * @result ModelWithString Success
+     * @throws ApiError
+     */
+    public static async complexParams(
+        id: number,
+        requestBody?: {
+            readonly key: string | null,
+            name: string | null,
+            enabled?: boolean,
+            readonly type: ('Monkey' | 'Horse' | 'Bird'),
+            listOfModels?: Array<ModelWithString> | null,
+            listOfStrings?: Array<string> | null,
+            parameters: ModelWithString | ModelWithEnum | ModelWithArray | ModelWithDictionary,
+            readonly user?: {
+                readonly id?: number,
+                readonly name?: string | null,
+            },
+        },
+    ): Promise<ModelWithString> {
+
+        const result = await __request({
+            method: 'put',
+            path: \`/api/v\${OpenAPI.VERSION}/complex/\${id}\`,
+            body: requestBody,
+        });
 
         catchGenericError(result);
 
@@ -3991,9 +4278,9 @@ export class DefaultsService {
      * @throws ApiError
      */
     public static async callWithDefaultParameters(
-        parameterString: string = 'Hello World!',
-        parameterNumber: number = 123,
-        parameterBoolean: boolean = true,
+        parameterString: string | null = 'Hello World!',
+        parameterNumber: number | null = 123,
+        parameterBoolean: boolean | null = true,
         parameterEnum: ('Success' | 'Warning' | 'Error') = 'Success',
         parameterModel: ModelWithString | null = {
             \\"prop\\": \\"Hello World\\"
@@ -4079,11 +4366,11 @@ export class ParametersService {
      * @throws ApiError
      */
     public static async callWithParameters(
-        parameterHeader?: string,
-        parameterQuery?: string,
-        parameterForm?: string,
-        parameterCookie?: string,
-        requestBody?: ModelWithString,
+        parameterHeader: string | null,
+        parameterQuery: string | null,
+        parameterForm: string | null,
+        parameterCookie: string | null,
+        requestBody: ModelWithString | null,
     ): Promise<void> {
 
         const result = await __request({
@@ -4100,6 +4387,99 @@ export class ParametersService {
             },
             formData: {
                 'parameterForm': parameterForm,
+            },
+            body: requestBody,
+        });
+
+        catchGenericError(result);
+
+        return result.body;
+    }
+
+    /**
+     * @param parameterHeader This is the parameter that goes into the request header
+     * @param parameterQuery This is the parameter that goes into the request query params
+     * @param parameterForm This is the parameter that goes into the request form data
+     * @param parameterCookie This is the parameter that goes into the cookie
+     * @param requestBody This is the parameter that goes into the body
+     * @param parameterPath1 This is the parameter that goes into the path
+     * @param parameterPath2 This is the parameter that goes into the path
+     * @param parameterPath3 This is the parameter that goes into the path
+     * @throws ApiError
+     */
+    public static async callWithWeirdParameterNames(
+        parameterHeader: string | null,
+        parameterQuery: string | null,
+        parameterForm: string | null,
+        parameterCookie: string | null,
+        requestBody: ModelWithString | null,
+        parameterPath1?: string,
+        parameterPath2?: string,
+        parameterPath3?: string,
+    ): Promise<void> {
+
+        const result = await __request({
+            method: 'get',
+            path: \`/api/v\${OpenAPI.VERSION}/parameters/\${parameterPath1}/\${parameterPath2}/\${parameterPath3}\`,
+            cookies: {
+                'PARAMETER-COOKIE': parameterCookie,
+            },
+            headers: {
+                'parameter.header': parameterHeader,
+            },
+            query: {
+                'parameter-query': parameterQuery,
+            },
+            formData: {
+                'parameter_form': parameterForm,
+            },
+            body: requestBody,
+        });
+
+        catchGenericError(result);
+
+        return result.body;
+    }
+
+    /**
+     * @param requestBody This is a required parameter
+     * @param parameter This is an optional parameter
+     * @throws ApiError
+     */
+    public static async getCallWithOptionalParam(
+        requestBody: ModelWithString,
+        parameter?: string,
+    ): Promise<void> {
+
+        const result = await __request({
+            method: 'get',
+            path: \`/api/v\${OpenAPI.VERSION}/parameters/\`,
+            query: {
+                'parameter': parameter,
+            },
+            body: requestBody,
+        });
+
+        catchGenericError(result);
+
+        return result.body;
+    }
+
+    /**
+     * @param parameter This is a required parameter
+     * @param requestBody This is an optional parameter
+     * @throws ApiError
+     */
+    public static async postCallWithOptionalParam(
+        parameter: string,
+        requestBody?: ModelWithString,
+    ): Promise<void> {
+
+        const result = await __request({
+            method: 'post',
+            path: \`/api/v\${OpenAPI.VERSION}/parameters/\`,
+            query: {
+                'parameter': parameter,
             },
             body: requestBody,
         });
@@ -4345,12 +4725,12 @@ export class TypesService {
      */
     public static async types(
         parameterNumber: number = 123,
-        parameterString: string = 'default',
-        parameterBoolean: boolean = true,
+        parameterString: string | null = 'default',
+        parameterBoolean: boolean | null = true,
         parameterObject: any = null,
-        parameterArray?: Array<string>,
-        parameterDictionary?: any,
-        parameterEnum?: ('Success' | 'Warning' | 'Error'),
+        parameterArray: Array<string> | null,
+        parameterDictionary: any,
+        parameterEnum: ('Success' | 'Warning' | 'Error') | null,
         id?: number,
     ): Promise<number | string | boolean | any> {
 

@@ -2,6 +2,7 @@ import { OpenApi } from '../interfaces/OpenApi';
 import { OpenApiParameter } from '../interfaces/OpenApiParameter';
 import { OperationParameter } from '../../../client/interfaces/OperationParameter';
 import { PrimaryType } from './constants';
+import { extendEnum } from './extendEnum';
 import { getComment } from './getComment';
 import { getEnum } from './getEnum';
 import { getEnumFromDescription } from './getEnumFromDescription';
@@ -52,19 +53,20 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
         operationParameter.template = definitionRef.template;
         operationParameter.imports.push(...definitionRef.imports);
         operationParameter.default = getOperationParameterDefault(parameter, operationParameter);
-        operationParameter.isRequired = operationParameter.default || operationParameter.isRequired;
+        operationParameter.isRequired = operationParameter.isRequired || operationParameter.default;
         return operationParameter;
     }
 
     if (parameter.enum) {
         const enumerators = getEnum(parameter.enum);
-        if (enumerators.length) {
+        const extendedEnumerators = extendEnum(enumerators, parameter);
+        if (extendedEnumerators.length) {
             operationParameter.export = 'enum';
             operationParameter.type = PrimaryType.STRING;
             operationParameter.base = PrimaryType.STRING;
-            operationParameter.enum.push(...enumerators);
+            operationParameter.enum.push(...extendedEnumerators);
             operationParameter.default = getOperationParameterDefault(parameter, operationParameter);
-            operationParameter.isRequired = operationParameter.default || operationParameter.isRequired;
+            operationParameter.isRequired = operationParameter.isRequired || operationParameter.default;
             return operationParameter;
         }
     }
@@ -77,7 +79,7 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
             operationParameter.base = PrimaryType.NUMBER;
             operationParameter.enum.push(...enumerators);
             operationParameter.default = getOperationParameterDefault(parameter, operationParameter);
-            operationParameter.isRequired = operationParameter.default || operationParameter.isRequired;
+            operationParameter.isRequired = operationParameter.isRequired || operationParameter.default;
             return operationParameter;
         }
     }
@@ -90,7 +92,7 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
         operationParameter.template = items.template;
         operationParameter.imports.push(...items.imports);
         operationParameter.default = getOperationParameterDefault(parameter, operationParameter);
-        operationParameter.isRequired = operationParameter.default || operationParameter.isRequired;
+        operationParameter.isRequired = operationParameter.isRequired || operationParameter.default;
         return operationParameter;
     }
 
@@ -103,7 +105,7 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
         operationParameter.imports.push(...items.imports);
         operationParameter.imports.push('Dictionary');
         operationParameter.default = getOperationParameterDefault(parameter, operationParameter);
-        operationParameter.isRequired = operationParameter.default || operationParameter.isRequired;
+        operationParameter.isRequired = operationParameter.isRequired || operationParameter.default;
         return operationParameter;
     }
 
@@ -116,7 +118,7 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
             operationParameter.template = model.template;
             operationParameter.imports.push(...model.imports);
             operationParameter.default = getOperationParameterDefault(parameter, operationParameter);
-            operationParameter.isRequired = operationParameter.default || operationParameter.isRequired;
+            operationParameter.isRequired = operationParameter.isRequired || operationParameter.default;
             return operationParameter;
         } else {
             const model = getModel(openApi, parameter.schema);
@@ -131,7 +133,7 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
             operationParameter.enums.push(...model.enums);
             operationParameter.properties.push(...model.properties);
             operationParameter.default = getOperationParameterDefault(parameter, operationParameter);
-            operationParameter.isRequired = operationParameter.default || operationParameter.isRequired;
+            operationParameter.isRequired = operationParameter.isRequired || operationParameter.default;
             return operationParameter;
         }
     }
@@ -145,7 +147,7 @@ export function getOperationParameter(openApi: OpenApi, parameter: OpenApiParame
         operationParameter.template = definitionType.template;
         operationParameter.imports.push(...definitionType.imports);
         operationParameter.default = getOperationParameterDefault(parameter, operationParameter);
-        operationParameter.isRequired = operationParameter.default || operationParameter.isRequired;
+        operationParameter.isRequired = operationParameter.isRequired || operationParameter.default;
         return operationParameter;
     }
 
