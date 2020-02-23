@@ -65,13 +65,15 @@ export async function request(options: Readonly<RequestOptions>): Promise<Result
     }
 
     try {
-        switch (OpenAPI.CLIENT) {
-            case 'xhr':
-                return await requestUsingXHR(url, request);
-            case 'wx':
-                return await requestUsingFlyIOWX(url, request);
-            default:
-                return await requestUsingFetch(url, request);
+        if (typeof OpenAPI.CLIENT === 'string') {
+            switch (OpenAPI.CLIENT) {
+                case 'xhr':
+                    return await requestUsingXHR(url, request);
+                default:
+                    return await requestUsingFetch(url, request);
+            }
+        } else {
+            return await OpenAPI.CLIENT(url, request)
         }
     } catch (error) {
         return {

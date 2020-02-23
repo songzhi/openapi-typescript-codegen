@@ -1,4 +1,4 @@
-import { Result } from '../../../bin/generated/core/Result';
+import { Result } from './Result';
 import { isSuccess } from './isSuccess';
 const Fly = require('flyio/dist/npm/wx');
 const flyio = new Fly();

@@ -6,6 +6,8 @@
 export namespace OpenAPI {
     export let BASE = '{{{server}}}';
     export let VERSION = '{{{version}}}';
-    export let CLIENT = '{{{httpClient}}}';
+    export let CLIENT:
+    | string
+    | ((url: string, request: Readonly<RequestInit>) => Promise<Result>) = '{{{httpClient}}}';
     export let TOKEN = '';
 }
